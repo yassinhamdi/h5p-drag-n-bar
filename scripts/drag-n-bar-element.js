@@ -149,11 +149,12 @@ H5P.DragNBarElement = (function ($, ContextMenu, EventDispatcher) {
     var $cm = this.contextMenu.$contextMenu;
 
     const language = window?.H5PEditor?.contentLanguage
-    // Need to take into account the left margin of the contextmenu's parent on RTL Mode
+    // Need to take into account the left margin of the contextmenu's parent on RTL Mode with dragQuestion
     let parentWidth = Number(this.contextMenu.$parent.css('width').replace('px', ''))
-    let dragQuestionWidth = Number($('.h5peditor-dragquestion.h5p-ready')?.css('width')?.replace('px', '') || parentWidth)
-    let marginLeft = parentWidth - dragQuestionWidth
-    if(language && language == 'ar')  left = left + marginLeft
+    let parentClass = this.contextMenu.$parent.attr('class').split(' ')
+    let dragnbarWidth = Number(this.contextMenu.$parent.find('div:first')?.css('width')?.replace('px', '') || parentWidth)
+    let marginLeft = parentWidth - dragnbarWidth
+    if(language && language == 'ar' && parentClass.includes('dragQuestion'))  left = left + marginLeft
     
     // Measure full outer width
     $cm.css({
